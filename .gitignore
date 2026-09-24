@@ -6,3 +6,10 @@
 
 # macOS DS_Store files
 .DS_Store
+
+# Environment variables and secrets
+.env
+*.key
+config/secrets.json
+node_modules/
+__pycache__/
