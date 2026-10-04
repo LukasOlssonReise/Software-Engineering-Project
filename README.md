@@ -31,6 +31,17 @@
 - *Supports up to 5000 users*
 - *Data persistently*
 
+### User Manual
+
+**Installing**
+- Visual Studio 2022
+	- ASP.NET and web development
+- Download my files
+- Put them in a project file
+
+**Running**
+- Run IIS Express in Visual studio
+
 ---
 
 ## Your Backlog
