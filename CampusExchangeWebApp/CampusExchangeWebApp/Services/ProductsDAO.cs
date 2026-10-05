@@ -49,7 +49,26 @@ namespace CampusExchangeWebApp.Services
 
         public List<ProductModel> SearchProducts(string searchTerm)
         {
-            throw new NotImplementedException();
+            List<ProductModel> foundProducts = new List<ProductModel>();
+
+            // SQL code to get products with Name = @Name from database
+            string sqlStatement = "SELECT * FROM dbo.Products WHERE Name LIKE @Name";
+
+            // Talk to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@Name", '%' + searchTerm + '%');
+
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    foundProducts.Add(new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2] });
+                }
+            }
+            return foundProducts;
         }
 
         public int Update(ProductModel product)
