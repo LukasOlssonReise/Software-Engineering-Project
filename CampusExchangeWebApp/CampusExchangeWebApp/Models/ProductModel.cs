@@ -6,11 +6,11 @@ namespace CampusExchangeWebApp.Models
     public class ProductModel
     {
         // Id
-        [DisplayName("Product Id")]
+        [DisplayName("Id")]
         public int Id { get; set; }
 
         // Name
-        [DisplayName("Product Name")]
+        [DisplayName("Name")]
         public string Name { get; set; }
 
         // Description
