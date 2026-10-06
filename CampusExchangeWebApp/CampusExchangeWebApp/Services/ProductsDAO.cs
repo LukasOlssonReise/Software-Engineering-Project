@@ -11,7 +11,21 @@ namespace CampusExchangeWebApp.Services
 
         public int Delete(ProductModel product)
         {
-            throw new NotImplementedException();
+            int newIdNumber = -1;
+
+            // SQL code to get a product with Id = @Id from database
+            string sqlStatement = "DELETE FROM dbo.Products WHERE Id = @Id";
+
+            // Talk to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@Id", product.Id);
+
+                connection.Open();
+                newIdNumber = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return newIdNumber;
         }
 
         public List<ProductModel> GetAllProducts()
@@ -39,7 +53,26 @@ namespace CampusExchangeWebApp.Services
 
         public ProductModel GetProductById(int id)
         {
-            throw new NotImplementedException();
+            ProductModel foundProduct = null;
+
+            // SQL code to get a product with Id = @Id from database
+            string sqlStatement = "SELECT * FROM dbo.Products WHERE Id = @Id";
+
+            // Talk to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@Id", id);
+
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    foundProduct = new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2] };
+                }
+            }
+            return foundProduct;
         }
 
         public int Insert(ProductModel product)
@@ -73,7 +106,23 @@ namespace CampusExchangeWebApp.Services
 
         public int Update(ProductModel product)
         {
-            throw new NotImplementedException();
+            int newIdNumber = -1;
+
+            // SQL code to get a product with Id = @Id from database
+            string sqlStatement = "UPDATE dbo.Products SET Name = @Name, Description = @Description WHERE Id = @Id";
+
+            // Talk to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@Name", product.Name);
+                command.Parameters.AddWithValue("@Description", product.Description);
+                command.Parameters.AddWithValue("@Id", product.Id);
+
+                connection.Open();
+                newIdNumber = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return newIdNumber;
         }
     }
 }
