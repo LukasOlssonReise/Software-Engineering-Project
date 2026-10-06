@@ -13,6 +13,8 @@ namespace CampusExchangeWebApp.Controllers
             return View(products.GetAllProducts());
         }
 
+
+        // Search
         public IActionResult SearchResults(string searchTerm)
         {
             ProductsDAO products = new ProductsDAO();
@@ -33,13 +35,14 @@ namespace CampusExchangeWebApp.Controllers
             return View(foundProduct);
         }
 
+
+        // Edit
         public IActionResult Edit(int id)
         {
             ProductsDAO products = new ProductsDAO();
             ProductModel foundProduct = products.GetProductById(id);
             return View("Edit", foundProduct);
         }
-
         public IActionResult ProcessEdit(ProductModel product)
         {
             ProductsDAO products = new ProductsDAO();
@@ -47,12 +50,27 @@ namespace CampusExchangeWebApp.Controllers
             return View("Index", products.GetAllProducts());
         }
 
+
+        // Deleate
         public IActionResult Delete(int id)
         {
             ProductsDAO products = new ProductsDAO();
             ProductModel product = products.GetProductById(id);
             products.Delete(product);
             return View("Index", products.GetAllProducts());
+        }
+
+
+        // Create
+        public IActionResult ProcessCreate(ProductModel product)
+        {
+            ProductsDAO products = new ProductsDAO();
+            products.Insert(product);
+            return View("Index", products.GetAllProducts());
+        }
+        public IActionResult CreateForm()
+        {
+            return View();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace CampusExchangeWebApp.Services
         {
             int newIdNumber = -1;
 
-            // SQL code to get a product with Id = @Id from database
+            // SQL code to delete a product by their id from database 
             string sqlStatement = "DELETE FROM dbo.Products WHERE Id = @Id";
 
             // Talk to the database
@@ -55,7 +55,7 @@ namespace CampusExchangeWebApp.Services
         {
             ProductModel foundProduct = null;
 
-            // SQL code to get a product with Id = @Id from database
+            // SQL code to get a product by their id from database
             string sqlStatement = "SELECT * FROM dbo.Products WHERE Id = @Id";
 
             // Talk to the database
@@ -77,14 +77,29 @@ namespace CampusExchangeWebApp.Services
 
         public int Insert(ProductModel product)
         {
-            throw new NotImplementedException();
+            int newIdNumber = -1;
+
+            // SQL code to add a product in database
+            string sqlStatement = "INSERT INTO dbo.Products (Name, Description) VALUES (@Name, @Description)";
+
+            // Talk to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@Name", product.Name);
+                command.Parameters.AddWithValue("@Description", product.Description);
+
+                connection.Open();
+                newIdNumber = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return newIdNumber;
         }
 
         public List<ProductModel> SearchProducts(string searchTerm)
         {
             List<ProductModel> foundProducts = new List<ProductModel>();
 
-            // SQL code to get products with Name = @Name from database
+            // SQL code to get products with by their Name from database
             string sqlStatement = "SELECT * FROM dbo.Products WHERE Name LIKE @Name";
 
             // Talk to the database
@@ -108,7 +123,7 @@ namespace CampusExchangeWebApp.Services
         {
             int newIdNumber = -1;
 
-            // SQL code to get a product with Id = @Id from database
+            // SQL code to update a product by their id from database
             string sqlStatement = "UPDATE dbo.Products SET Name = @Name, Description = @Description WHERE Id = @Id";
 
             // Talk to the database
