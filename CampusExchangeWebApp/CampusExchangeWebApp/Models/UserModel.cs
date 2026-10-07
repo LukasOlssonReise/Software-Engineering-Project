@@ -6,13 +6,13 @@ namespace CampusExchangeWebApp.Models
     public class UserModel
     {
         // Id
-        [DisplayName("Account Id")]
+        [DisplayName("Id")]
         public int Id { get; set; }
 
         // Name
         [DisplayName("Name")]
         [Required]
-        public string Name { get; set; }
+        public string UserName { get; set; }
 
         // Password
         [DisplayName("Password")]

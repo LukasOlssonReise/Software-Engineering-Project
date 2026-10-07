@@ -1,4 +1,5 @@
 ﻿using CampusExchangeWebApp.Models;
+using CampusExchangeWebApp.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CampusExchangeWebApp.Controllers
@@ -12,7 +13,9 @@ namespace CampusExchangeWebApp.Controllers
 
         public IActionResult LoginProcess(UserModel userModel)
         {
-            if (userModel.Name == "123" && userModel.Password == "123")
+            SecurityService securityService = new SecurityService();
+
+            if (securityService.isValid(userModel))
             {
                 return View("LoginSucess", userModel);
             }
