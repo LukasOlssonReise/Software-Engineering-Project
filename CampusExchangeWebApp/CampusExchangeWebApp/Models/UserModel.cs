@@ -23,5 +23,10 @@ namespace CampusExchangeWebApp.Models
         [DisplayName("Email")]
         [Required]
         public string Email { get; set; }
+
+        public string toString()
+        {
+            return "(Name, Password) => " + UserName + ", " + Password;
+        }
     }
 }
