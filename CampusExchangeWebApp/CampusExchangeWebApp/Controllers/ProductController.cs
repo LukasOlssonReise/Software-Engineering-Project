@@ -15,11 +15,11 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Search
-        public IActionResult SearchResults(string searchTerm)
+        public IActionResult SearchResults(string searchTerm, string category)
         {
             ProductsDAO products = new ProductsDAO();
 
-            List<ProductModel> prouctList = products.SearchProducts(searchTerm);
+            List<ProductModel> prouctList = products.SearchProducts(searchTerm, category);
             return View("index", prouctList);
         }
 

@@ -95,25 +95,36 @@ namespace CampusExchangeWebApp.Services
             return newIdNumber;
         }
 
-        public List<ProductModel> SearchProducts(string searchTerm)
+        public List<ProductModel> SearchProducts(string searchTerm, string category)
         {
             List<ProductModel> foundProducts = new List<ProductModel>();
 
             // SQL code to get products with by their Name from database
             string sqlStatement = "SELECT * FROM dbo.Products WHERE Name LIKE @Name";
 
+            // If one of category is selected
+            bool filterByCategory = !string.IsNullOrEmpty(category) && category != "All";
+            if (filterByCategory)
+            {
+                sqlStatement += " AND Category = @Category";
+            }
+
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
                 command.Parameters.AddWithValue("@Name", '%' + searchTerm + '%');
+                if (filterByCategory)
+                {
+                    command.Parameters.AddWithValue("@Category", category);
+                }
 
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    foundProducts.Add(new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2] });
+                    foundProducts.Add(new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2], Category = (string)reader[3] });
                 }
             }
             return foundProducts;
