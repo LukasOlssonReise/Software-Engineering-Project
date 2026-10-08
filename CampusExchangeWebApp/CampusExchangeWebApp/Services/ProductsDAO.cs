@@ -45,7 +45,7 @@ namespace CampusExchangeWebApp.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    foundProducts.Add(new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2], Photo = (string)reader[3] });
+                    foundProducts.Add(new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2], Category = (string)reader[3] });
                 }
             }
             return foundProducts;
@@ -69,7 +69,7 @@ namespace CampusExchangeWebApp.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    foundProduct = new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2] };
+                    foundProduct = new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2], Category = (string)reader[3] };
                 }
             }
             return foundProduct;
@@ -80,7 +80,7 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to add a product in database
-            string sqlStatement = "INSERT INTO dbo.Products (Name, Description) VALUES (@Name, @Description)";
+            string sqlStatement = "INSERT INTO dbo.Products (Name, Description, Category) VALUES (@Name, @Description, @Category)";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -88,6 +88,7 @@ namespace CampusExchangeWebApp.Services
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
                 command.Parameters.AddWithValue("@Name", product.Name);
                 command.Parameters.AddWithValue("@Description", product.Description);
+                command.Parameters.AddWithValue("@Category", product.Category);
 
                 connection.Open();
                 newIdNumber = Convert.ToInt32(command.ExecuteScalar());
@@ -135,7 +136,7 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to update a product by their id from database
-            string sqlStatement = "UPDATE dbo.Products SET Name = @Name, Description = @Description WHERE Id = @Id";
+            string sqlStatement = "UPDATE dbo.Products SET Name = @Name, Description = @Description, Category = @Category WHERE Id = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -143,6 +144,7 @@ namespace CampusExchangeWebApp.Services
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
                 command.Parameters.AddWithValue("@Name", product.Name);
                 command.Parameters.AddWithValue("@Description", product.Description);
+                command.Parameters.AddWithValue("@Category", product.Category);
                 command.Parameters.AddWithValue("@Id", product.Id);
 
                 connection.Open();

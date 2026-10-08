@@ -22,7 +22,6 @@ namespace CampusExchangeWebApp.Controllers
             List<ProductModel> prouctList = products.SearchProducts(searchTerm, category);
             return View("index", prouctList);
         }
-
         public IActionResult Search()
         {
             return View();

@@ -126,7 +126,7 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to update a Account by their id from database
-            string sqlStatement = "UPDATE dbo.Accounts SET USERNAME = @UserName, PASSWORD = @Password, EMAIL = @Email WHERE Id = @Id";
+            string sqlStatement = "UPDATE dbo.Accounts SET USERNAME = @UserName, PASSWORD = @Password, EMAIL = @Email WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -134,7 +134,8 @@ namespace CampusExchangeWebApp.Services
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
                 command.Parameters.AddWithValue("@UserName", account.UserName);
                 command.Parameters.AddWithValue("@Password", account.Password);
-                command.Parameters.AddWithValue("@Email", account.Id);
+                command.Parameters.AddWithValue("@Email", account.Email);
+                command.Parameters.AddWithValue("@Id", account.Id);
 
                 connection.Open();
                 newIdNumber = Convert.ToInt32(command.ExecuteScalar());

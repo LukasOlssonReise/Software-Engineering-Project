@@ -21,6 +21,7 @@ namespace CampusExchangeWebApp.Models
         [DisplayName("Category")]
         public string Category { get; set; }
 
+        // Photo
         [DisplayName("Photo")]
         public string Photo {  get; set; }
     }
