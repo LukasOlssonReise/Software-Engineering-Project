@@ -45,7 +45,7 @@ namespace CampusExchangeWebApp.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    foundProducts.Add(new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2] });
+                    foundProducts.Add(new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2], Photo = (string)reader[3] });
                 }
             }
             return foundProducts;

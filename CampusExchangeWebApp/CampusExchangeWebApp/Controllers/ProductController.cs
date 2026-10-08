@@ -70,7 +70,7 @@ namespace CampusExchangeWebApp.Controllers
             products.Insert(product);
             return View("Index", products.GetAllProducts());
         }
-        public IActionResult CreateForm()
+        public IActionResult Create()
         {
             return View();
         }

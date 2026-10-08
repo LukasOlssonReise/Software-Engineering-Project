@@ -16,5 +16,8 @@ namespace CampusExchangeWebApp.Models
         // Description
         [DisplayName("Description")]
         public string Description { get; set; }
+
+        [DisplayName("Photo")]
+        public string Photo {  get; set; }
     }
 }

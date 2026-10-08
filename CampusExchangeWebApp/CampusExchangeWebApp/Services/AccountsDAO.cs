@@ -13,7 +13,7 @@ namespace CampusExchangeWebApp.Services
         public bool FindUserByNameAndPassword(AccountModel user)
         {
             // SQL code to get a user with same username and password with the @ values
-            string sqlStatement = "SELECT * FROM dbo.Users WHERE USERNAME = @UserName AND PASSWORD = @Password";
+            string sqlStatement = "SELECT * FROM dbo.Accounts WHERE USERNAME = @UserName AND PASSWORD = @Password";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
