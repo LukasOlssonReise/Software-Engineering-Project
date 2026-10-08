@@ -4,13 +4,13 @@ namespace CampusExchangeWebApp.Services
 {
     public class SecurityService
     {
-        UsersDAO usersDAO = new UsersDAO();
+        AccountsDAO usersDAO = new AccountsDAO();
         public SecurityService()
         {
             
         }
 
-        public bool isValid(UserModel user)
+        public bool isValid(AccountModel user)
         {
             return usersDAO.FindUserByNameAndPassword(user);
         }

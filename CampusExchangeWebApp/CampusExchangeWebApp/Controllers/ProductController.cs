@@ -23,11 +23,13 @@ namespace CampusExchangeWebApp.Controllers
             return View("index", prouctList);
         }
 
-        public IActionResult SearchForm()
+        public IActionResult Search()
         {
             return View();
         }
 
+
+        // Details
         public IActionResult Details(int id)
         {
             ProductsDAO products = new ProductsDAO();

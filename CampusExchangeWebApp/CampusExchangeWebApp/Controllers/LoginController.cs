@@ -13,7 +13,7 @@ namespace CampusExchangeWebApp.Controllers
             return View();
         }
 
-        public IActionResult LoginProcess(UserModel user)
+        public IActionResult LoginProcess(AccountModel user)
         {
             MyLogger.GetInstance().Info("Processing a Login attempt");
             MyLogger.GetInstance().Info(user.toString());

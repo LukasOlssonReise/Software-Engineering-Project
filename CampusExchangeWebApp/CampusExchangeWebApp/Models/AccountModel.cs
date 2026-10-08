@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CampusExchangeWebApp.Models
 {
-    public class UserModel
+    public class AccountModel
     {
         // Id
         [DisplayName("Id")]
