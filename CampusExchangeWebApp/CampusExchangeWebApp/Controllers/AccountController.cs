@@ -1,16 +1,73 @@
-﻿using CampusExchangeWebApp.Models;
+﻿using System.Security.Claims;
+using CampusExchangeWebApp.Models;
 using CampusExchangeWebApp.Services;
+using CampusExchangeWebApp.Utility;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CampusExchangeWebApp.Controllers
 {
     public class AccountController : Controller
     {
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             AccountsDAO products = new AccountsDAO();
 
             return View(products.GetAllAccounts());
+        }
+
+        // Login
+        public async Task<IActionResult> LoginProcess(AccountModel user)
+        {
+            // Logger
+            MyLogger.GetInstance().Info("Processing a Login attempt");
+            MyLogger.GetInstance().Info(user.toString());
+
+            SecurityService securityService = new SecurityService();
+
+            if (securityService.isValid(user))
+            {
+                MyLogger.GetInstance().Info("Login Sucess");
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.Role)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, "CookieAuth");
+                await HttpContext.SignInAsync("CookieAuth", new ClaimsPrincipal(claimsIdentity));
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                MyLogger.GetInstance().Warn("Login Failure");
+
+                ViewBag.ErrorMessage = "Invalid username or password, Please try again.";
+
+                return View("Login", user);
+            }
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync("CookieAuth");
+            return RedirectToAction("Login");
+        }
+
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
         // Details

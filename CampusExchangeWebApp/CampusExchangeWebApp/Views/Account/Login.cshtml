@@ -6,6 +6,15 @@
 
 <h4>Login to an Account</h4>
 <hr />
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <a>Invalid username or password, Please try again.</a>
+    </div>
+}
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="LoginProcess">

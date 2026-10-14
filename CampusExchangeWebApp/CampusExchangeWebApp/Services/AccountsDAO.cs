@@ -34,6 +34,7 @@ namespace CampusExchangeWebApp.Services
             // SQL code to get a Account with same username and password with the @ values
             string sqlStatement = "SELECT * FROM dbo.Accounts WHERE USERNAME = @UserName AND PASSWORD = @Password";
 
+            // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
@@ -42,11 +43,16 @@ namespace CampusExchangeWebApp.Services
                 command.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, 40).Value = account.Password;
 
                 connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    success = true;
+                    if (reader.Read())
+                    {
+                        success = true;
+
+                        account.Id = Convert.ToInt32(reader["ID"]);
+                        account.Email = reader["EMAIL"].ToString();
+                        account.Role = reader["ROLE"].ToString();
+                    }   
                 }
             }
 
