@@ -14,7 +14,7 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to delete a product by their id from database 
-            string sqlStatement = "DELETE FROM dbo.Products WHERE Id = @Id";
+            string sqlStatement = "DELETE FROM dbo.Products WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -45,7 +45,15 @@ namespace CampusExchangeWebApp.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    foundProducts.Add(new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2], Category = (string)reader[3] });
+                    foundProducts.Add(new ProductModel
+                    { 
+                        Id = (int)reader[0],
+                        Name = (string)reader[1],
+                        Description = (string)reader[2],
+                        Category = (string)reader[3],
+                        Photo = System.Text.Encoding.UTF8.GetString((byte[])reader[4]),
+                        AccountId = (int)reader[5]
+                    });
                 }
             }
             return foundProducts;
@@ -56,7 +64,7 @@ namespace CampusExchangeWebApp.Services
             ProductModel foundProduct = null;
 
             // SQL code to get a product by their id from database
-            string sqlStatement = "SELECT * FROM dbo.Products WHERE Id = @Id";
+            string sqlStatement = "SELECT * FROM dbo.Products WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -69,10 +77,50 @@ namespace CampusExchangeWebApp.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    foundProduct = new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2], Category = (string)reader[3] };
+                    foundProduct = new ProductModel
+                    {
+                        Id = (int)reader[0],
+                        Name = (string)reader[1],
+                        Description = (string)reader[2],
+                        Category = (string)reader[3],
+                        Photo = System.Text.Encoding.UTF8.GetString((byte[])reader[4]),
+                        AccountId = (int)reader[5]
+                    };
                 }
             }
             return foundProduct;
+        }
+
+        public List<ProductModel> GetProductsByAccountId(int account_id)
+        {
+            List<ProductModel> foundProducts = new List<ProductModel>();
+
+            // SQL code to get all products from database
+            string sqlStatement = "SELECT * FROM dbo.Products WHERE ACCOUNT_ID = @Account_Id";
+
+            // Talk to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@Account_Id", account_id);
+
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    foundProducts.Add(new ProductModel
+                    {
+                        Id = (int)reader[0],
+                        Name = (string)reader[1],
+                        Description = (string)reader[2],
+                        Category = (string)reader[3],
+                        Photo = System.Text.Encoding.UTF8.GetString((byte[])reader[4]),
+                        AccountId = (int)reader[5]
+                    });
+                }
+            }
+            return foundProducts;
         }
 
         public int Insert(ProductModel product)
@@ -80,7 +128,7 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to add a product in database
-            string sqlStatement = "INSERT INTO dbo.Products (Name, Description, Category) VALUES (@Name, @Description, @Category)";
+            string sqlStatement = "INSERT INTO dbo.Products (NAME, DESCRIPTION, CATEGORY) VALUES (@Name, @Description, @Category)";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -101,13 +149,13 @@ namespace CampusExchangeWebApp.Services
             List<ProductModel> foundProducts = new List<ProductModel>();
 
             // SQL code to get products with by their Name from database
-            string sqlStatement = "SELECT * FROM dbo.Products WHERE Name LIKE @Name";
+            string sqlStatement = "SELECT * FROM dbo.Products WHERE NAME LIKE @Name";
 
             // If one of category is selected
             bool filterByCategory = !string.IsNullOrEmpty(category) && category != "All";
             if (filterByCategory)
             {
-                sqlStatement += " AND Category = @Category";
+                sqlStatement += " AND CATEGORY = @Category";
             }
 
             // Talk to the database
@@ -125,7 +173,15 @@ namespace CampusExchangeWebApp.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    foundProducts.Add(new ProductModel { Id = (int)reader[0], Name = (string)reader[1], Description = (string)reader[2], Category = (string)reader[3] });
+                    foundProducts.Add(new ProductModel
+                    {
+                        Id = (int)reader[0],
+                        Name = (string)reader[1],
+                        Description = (string)reader[2],
+                        Category = (string)reader[3],
+                        Photo = System.Text.Encoding.UTF8.GetString((byte[])reader[4]),
+                        AccountId = (int)reader[5]
+                    });
                 }
             }
             return foundProducts;
@@ -136,7 +192,7 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to update a product by their id from database
-            string sqlStatement = "UPDATE dbo.Products SET Name = @Name, Description = @Description, Category = @Category WHERE Id = @Id";
+            string sqlStatement = "UPDATE dbo.Products SET NAME = @Name, DESCRIPTION = @Description, CATEGORY = @Category WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))

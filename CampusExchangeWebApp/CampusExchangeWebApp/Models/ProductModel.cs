@@ -23,6 +23,10 @@ namespace CampusExchangeWebApp.Models
 
         // Photo
         [DisplayName("Photo")]
-        public string Photo {  get; set; }
+        public string Photo { get; set; }
+
+        // Account Id
+        [DisplayName("Account Id")]
+        public int AccountId { get; set; }
     }
 }

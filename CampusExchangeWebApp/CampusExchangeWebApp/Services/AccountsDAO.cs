@@ -1,4 +1,5 @@
-﻿using CampusExchangeWebApp.Models;
+﻿using System.Security.Principal;
+using CampusExchangeWebApp.Models;
 using Microsoft.Data.SqlClient;
 
 namespace CampusExchangeWebApp.Services
@@ -59,12 +60,32 @@ namespace CampusExchangeWebApp.Services
             return success;
         }
 
+        public int GetAccountByUserName(string username)
+        {
+            int accountId = -1;
+
+            // SQL code to get a Account by their username from database
+            string sqlStatement = "SELECT ID FROM dbo.Accounts WHERE USERNAME = @UserName";
+
+            // Talk to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.AddWithValue("@UserName", username);
+
+                connection.Open();
+
+                accountId = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return accountId;
+        }
+
         public AccountModel GetAccountById(int id)
         {
             AccountModel foundAccount = null;
 
             // SQL code to get a Account by their id from database
-            string sqlStatement = "SELECT * FROM dbo.Accounts WHERE Id = @Id";
+            string sqlStatement = "SELECT * FROM dbo.Accounts WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))

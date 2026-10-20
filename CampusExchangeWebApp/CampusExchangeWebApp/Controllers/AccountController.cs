@@ -19,6 +19,7 @@ namespace CampusExchangeWebApp.Controllers
             return View(products.GetAllAccounts());
         }
 
+
         // Login
         public async Task<IActionResult> LoginProcess(AccountModel user)
         {
@@ -58,11 +59,13 @@ namespace CampusExchangeWebApp.Controllers
             return View();
         }
 
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("CookieAuth");
             return RedirectToAction("Login");
         }
+
 
         [AllowAnonymous]
         public IActionResult AccessDenied()
@@ -70,7 +73,24 @@ namespace CampusExchangeWebApp.Controllers
             return View();
         }
 
+
+        public IActionResult MyItems()
+        {
+            ProductsDAO products = new ProductsDAO();
+            AccountsDAO accounts = new AccountsDAO();
+
+            string username = User.Identity.Name;
+
+            int accountId = accounts.GetAccountByUserName(username);
+            
+            List<ProductModel> foundAccountItems = products.GetProductsByAccountId(accountId);
+
+            return View(foundAccountItems);
+        }
+
+
         // Details
+        [Authorize(Roles = "Admin")]
         public IActionResult Details(int id)
         {
             AccountsDAO accounts = new AccountsDAO();
@@ -80,6 +100,7 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Edit
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             AccountsDAO accounts = new AccountsDAO();
@@ -95,6 +116,7 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Deleate
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             AccountsDAO accounts = new AccountsDAO();

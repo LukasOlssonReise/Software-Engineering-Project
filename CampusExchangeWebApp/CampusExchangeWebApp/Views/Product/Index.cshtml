@@ -13,7 +13,7 @@
     @foreach(var item in Model)
     {
         <div class="card mb-3" style="width: 18rem;">
-            <img src="http://dummyimage.com/250x250.png/ff4444/ffffff" class="card-img-top" alt="...">
+            <img src="@item.Photo" class="card-img-top" alt="@item.Photo">
             <div class="card-body">
                 <h5 class="card-title">@item.Name</h5>
                 <p class="card-text">@item.Description</p>
