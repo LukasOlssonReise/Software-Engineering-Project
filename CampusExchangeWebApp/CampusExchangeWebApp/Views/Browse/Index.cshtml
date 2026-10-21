@@ -1,0 +1,26 @@
+@model IEnumerable<CampusExchangeWebApp.Models.ProductModel>
+
+@{
+    ViewData["Title"] = "Browse Page";
+}
+
+<h1>List of all Items</h1>
+<hr />
+
+<div class="container d-flex flex-wrap">
+
+    @foreach(var item in Model)
+    {
+        <div class="card mb-3" style="width: 18rem;">
+            <img src="@item.Photo" class="card-img-top" alt="@item.Photo">
+            <div class="card-body">
+                <span class="badge bg-primary">@item.Category</span>
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">@item.Description</p>
+                <a href="/Browse/Borrow/@item.Id" class="btn btn-info">Request to borrow</a>
+                <a href="/Browse/Details/@item.Id" class="btn btn-info">Show Details</a>
+            </div>
+        </div>
+    }
+
+</div>

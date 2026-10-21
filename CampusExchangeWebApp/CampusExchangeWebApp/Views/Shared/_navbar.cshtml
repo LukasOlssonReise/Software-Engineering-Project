@@ -9,10 +9,10 @@
             <!-- Left side of the navbar -->
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Browse</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Browse" asp-action="Index">Browse</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Search">Search</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Browse" asp-action="Search">Search</a>
                 </li>
             </ul>
 
@@ -34,9 +34,13 @@
                     // Account is only visible to administrators
                     @if (User.IsInRole("Admin"))
                     {
+                        <!-- Product -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Products</a>
+                        </li>
                         <!-- Account -->
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Accounts</a>
                         </li>
                     }
 

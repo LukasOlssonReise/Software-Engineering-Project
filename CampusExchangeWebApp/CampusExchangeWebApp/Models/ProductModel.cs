@@ -11,14 +11,17 @@ namespace CampusExchangeWebApp.Models
 
         // Name
         [DisplayName("Name")]
+        [Required]
         public string Name { get; set; }
 
         // Description
         [DisplayName("Description")]
+        [Required]
         public string Description { get; set; }
 
         // Category
         [DisplayName("Category")]
+        [Required]
         public string Category { get; set; }
 
         // Photo

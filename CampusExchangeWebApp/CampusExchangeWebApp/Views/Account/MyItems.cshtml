@@ -1,10 +1,10 @@
 @model IEnumerable<CampusExchangeWebApp.Models.ProductModel>
 
 @{
-    ViewData["Title"] = "My Items";
+    ViewData["Title"] = "My Items Page";
 }
 
-<h1>My Items</h1>
+<h1>List of My Items</h1>
 
 <p>
     <a asp-controller="Product" asp-action="Create">Add item</a>
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(model => item.Category)
             </td>
             <td>
-                <img src="@item.Photo" width="50" height="50"/>
+                <img src="@item.Photo" width="125" height="125"/>
             </td>
             <td>
                 <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

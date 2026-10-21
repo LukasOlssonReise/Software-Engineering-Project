@@ -14,20 +14,6 @@ namespace CampusExchangeWebApp.Controllers
         }
 
 
-        // Search
-        public IActionResult SearchResults(string searchTerm, string category)
-        {
-            ProductsDAO products = new ProductsDAO();
-
-            List<ProductModel> prouctList = products.SearchProducts(searchTerm, category);
-            return View("index", prouctList);
-        }
-        public IActionResult Search()
-        {
-            return View();
-        }
-
-
         // Details
         public IActionResult Details(int id)
         {
@@ -66,6 +52,13 @@ namespace CampusExchangeWebApp.Controllers
         public IActionResult ProcessCreate(ProductModel product)
         {
             ProductsDAO products = new ProductsDAO();
+            AccountsDAO accounts = new AccountsDAO();
+
+            string currentUsername = User.Identity.Name;
+            int accountId = accounts.GetAccountByUserName(currentUsername);
+
+            product.AccountId = accountId;
+
             products.Insert(product);
             return View("Index", products.GetAllProducts());
         }

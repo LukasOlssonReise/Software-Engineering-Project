@@ -51,7 +51,6 @@ namespace CampusExchangeWebApp.Services
                         Name = (string)reader[1],
                         Description = (string)reader[2],
                         Category = (string)reader[3],
-                        Photo = System.Text.Encoding.UTF8.GetString((byte[])reader[4]),
                         AccountId = (int)reader[5]
                     });
                 }
@@ -83,7 +82,6 @@ namespace CampusExchangeWebApp.Services
                         Name = (string)reader[1],
                         Description = (string)reader[2],
                         Category = (string)reader[3],
-                        Photo = System.Text.Encoding.UTF8.GetString((byte[])reader[4]),
                         AccountId = (int)reader[5]
                     };
                 }
@@ -115,7 +113,7 @@ namespace CampusExchangeWebApp.Services
                         Name = (string)reader[1],
                         Description = (string)reader[2],
                         Category = (string)reader[3],
-                        Photo = System.Text.Encoding.UTF8.GetString((byte[])reader[4]),
+                        Photo = reader[4] != DBNull.Value ? System.Text.Encoding.UTF8.GetString((byte[])reader[4]) : null,
                         AccountId = (int)reader[5]
                     });
                 }
@@ -128,7 +126,7 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to add a product in database
-            string sqlStatement = "INSERT INTO dbo.Products (NAME, DESCRIPTION, CATEGORY) VALUES (@Name, @Description, @Category)";
+            string sqlStatement = "INSERT INTO dbo.Products (NAME, DESCRIPTION, CATEGORY, ACCOUNT_ID) VALUES (@Name, @Description, @Category, @AccountId)";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -137,6 +135,7 @@ namespace CampusExchangeWebApp.Services
                 command.Parameters.AddWithValue("@Name", product.Name);
                 command.Parameters.AddWithValue("@Description", product.Description);
                 command.Parameters.AddWithValue("@Category", product.Category);
+                command.Parameters.AddWithValue("@AccountId", product.AccountId);
 
                 connection.Open();
                 newIdNumber = Convert.ToInt32(command.ExecuteScalar());
@@ -155,7 +154,7 @@ namespace CampusExchangeWebApp.Services
             bool filterByCategory = !string.IsNullOrEmpty(category) && category != "All";
             if (filterByCategory)
             {
-                sqlStatement += " AND CATEGORY = @Category";
+                sqlStatement += " AND CATEGORY LIKE @Category";
             }
 
             // Talk to the database
@@ -165,7 +164,7 @@ namespace CampusExchangeWebApp.Services
                 command.Parameters.AddWithValue("@Name", '%' + searchTerm + '%');
                 if (filterByCategory)
                 {
-                    command.Parameters.AddWithValue("@Category", category);
+                    command.Parameters.AddWithValue("@Category", '%' + category + '%');
                 }
 
                 connection.Open();
@@ -179,7 +178,6 @@ namespace CampusExchangeWebApp.Services
                         Name = (string)reader[1],
                         Description = (string)reader[2],
                         Category = (string)reader[3],
-                        Photo = System.Text.Encoding.UTF8.GetString((byte[])reader[4]),
                         AccountId = (int)reader[5]
                     });
                 }
