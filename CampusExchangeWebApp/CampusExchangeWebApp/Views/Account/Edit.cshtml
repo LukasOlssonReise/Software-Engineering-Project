@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit Account";
 }
 
-<h4>Edit Account</h4>
+<h1>Edit Account</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -32,13 +32,10 @@
 
             <div class="form-group mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Cancel</a>
 </div>
 
 @section Scripts {

@@ -5,7 +5,7 @@
 }
 
 <h1>Add Product</h1>
-
+<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="ProcessCreate">
@@ -54,11 +54,8 @@
 
             <div class="form-group mb-3">
                 <input type="submit" value="Add" class="btn btn-primary" />
+                <a asp-controller="Account" asp-action="MyItems" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Cancel</a>
 </div>

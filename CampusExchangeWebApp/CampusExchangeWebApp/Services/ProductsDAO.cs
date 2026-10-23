@@ -6,15 +6,22 @@ namespace CampusExchangeWebApp.Services
     public class ProductsDAO : IProductDataServices
     {
         // Connection string for database
-        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CampusExchange;Integrated Security=True;
-            Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;
+                                    Initial Catalog=CampusExchange;
+                                    Integrated Security=True;
+                                    Connect Timeout=30;
+                                    Encrypt=False;
+                                    TrustServerCertificate=False;
+                                    ApplicationIntent=ReadWrite;
+                                    MultiSubnetFailover=False";
 
         public int Delete(ProductModel product)
         {
             int newIdNumber = -1;
 
             // SQL code to delete a product by their id from database 
-            string sqlStatement = "DELETE FROM dbo.Products WHERE ID = @Id";
+            string sqlStatement = @"DELETE FROM dbo.Products
+                                    WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -63,7 +70,10 @@ namespace CampusExchangeWebApp.Services
             ProductModel foundProduct = null;
 
             // SQL code to get a product by their id from database
-            string sqlStatement = "SELECT * FROM dbo.Products WHERE ID = @Id";
+            string sqlStatement = @"SELECT p.ID, p.NAME, p.DESCRIPTION, p.CATEGORY, p.PHOTO, p.ACCOUNT_ID, a.USERNAME
+                                    FROM dbo.Products p
+                                    INNER JOIN dbo.Accounts a ON p.ACCOUNT_ID = a.ID
+                                    WHERE p.ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -82,7 +92,8 @@ namespace CampusExchangeWebApp.Services
                         Name = (string)reader[1],
                         Description = (string)reader[2],
                         Category = (string)reader[3],
-                        AccountId = (int)reader[5]
+                        AccountId = (int)reader[5],
+                        AccountUserName = (string)reader[6]
                     };
                 }
             }
@@ -94,7 +105,8 @@ namespace CampusExchangeWebApp.Services
             List<ProductModel> foundProducts = new List<ProductModel>();
 
             // SQL code to get all products from database
-            string sqlStatement = "SELECT * FROM dbo.Products WHERE ACCOUNT_ID = @Account_Id";
+            string sqlStatement = @"SELECT * FROM dbo.Products
+                                    WHERE ACCOUNT_ID = @Account_Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -126,7 +138,8 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to add a product in database
-            string sqlStatement = "INSERT INTO dbo.Products (NAME, DESCRIPTION, CATEGORY, ACCOUNT_ID) VALUES (@Name, @Description, @Category, @AccountId)";
+            string sqlStatement = @"INSERT INTO dbo.Products (NAME, DESCRIPTION, CATEGORY, ACCOUNT_ID)
+                                    VALUES (@Name, @Description, @Category, @AccountId)";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -148,7 +161,8 @@ namespace CampusExchangeWebApp.Services
             List<ProductModel> foundProducts = new List<ProductModel>();
 
             // SQL code to get products with by their Name from database
-            string sqlStatement = "SELECT * FROM dbo.Products WHERE NAME LIKE @Name";
+            string sqlStatement = @"SELECT * FROM dbo.Products
+                                    WHERE NAME LIKE @Name";
 
             // If one of category is selected
             bool filterByCategory = !string.IsNullOrEmpty(category) && category != "All";
@@ -190,7 +204,9 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to update a product by their id from database
-            string sqlStatement = "UPDATE dbo.Products SET NAME = @Name, DESCRIPTION = @Description, CATEGORY = @Category WHERE ID = @Id";
+            string sqlStatement = @"UPDATE dbo.Products
+                                    SET NAME = @Name, DESCRIPTION = @Description, CATEGORY = @Category
+                                    WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))

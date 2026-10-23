@@ -4,7 +4,7 @@
     ViewData["Title"] = "Account Details";
 }
 <div>
-    <h4>Details</h4>
+    <h1>Account Details</h1>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -34,7 +34,7 @@
     </dl>
 </div>
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to Account</a>
+<div class="form-group mb-3">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to Account</a>
 </div>

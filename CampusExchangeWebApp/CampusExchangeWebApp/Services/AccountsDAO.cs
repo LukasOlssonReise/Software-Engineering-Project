@@ -8,15 +8,22 @@ namespace CampusExchangeWebApp.Services
     {
         bool success = false;
 
-        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CampusExchange;Integrated Security=True;
-            Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;
+                                    Initial Catalog=CampusExchange;
+                                    Integrated Security=True;
+                                    Connect Timeout=30;
+                                    Encrypt=False;
+                                    TrustServerCertificate=False;
+                                    ApplicationIntent=ReadWrite;
+                                    MultiSubnetFailover=False";
 
         public int Delete(AccountModel account)
         {
             int newIdNumber = -1;
 
             // SQL code to delete a Account by their id from database 
-            string sqlStatement = "DELETE FROM dbo.Accounts WHERE ID = @Id";
+            string sqlStatement = @"DELETE FROM dbo.Accounts
+                                    WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -33,7 +40,8 @@ namespace CampusExchangeWebApp.Services
         public bool FindUserByNameAndPassword(AccountModel account)
         {
             // SQL code to get a Account with same username and password with the @ values
-            string sqlStatement = "SELECT * FROM dbo.Accounts WHERE USERNAME = @UserName AND PASSWORD = @Password";
+            string sqlStatement = @"SELECT * FROM dbo.Accounts
+                                    WHERE USERNAME = @UserName AND PASSWORD = @Password";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -65,7 +73,8 @@ namespace CampusExchangeWebApp.Services
             int accountId = -1;
 
             // SQL code to get a Account by their username from database
-            string sqlStatement = "SELECT ID FROM dbo.Accounts WHERE USERNAME = @UserName";
+            string sqlStatement = @"SELECT ID FROM dbo.Accounts
+                                    WHERE USERNAME = @UserName";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -85,7 +94,8 @@ namespace CampusExchangeWebApp.Services
             AccountModel foundAccount = null;
 
             // SQL code to get a Account by their id from database
-            string sqlStatement = "SELECT * FROM dbo.Accounts WHERE ID = @Id";
+            string sqlStatement = @"SELECT * FROM dbo.Accounts
+                                    WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -109,7 +119,7 @@ namespace CampusExchangeWebApp.Services
             List<AccountModel> foundAccounts = new List<AccountModel>();
 
             // SQL code to get all Accounts from database
-            string sqlStatement = "SELECT * FROM dbo.Accounts";
+            string sqlStatement = @"SELECT * FROM dbo.Accounts";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -132,7 +142,8 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to add a Account in database
-            string sqlStatement = "INSERT INTO dbo.Accounts (USERNAME, PASSWORD, EMAIL) VALUES (@UserName, @Password, @Email)";
+            string sqlStatement = @"INSERT INTO dbo.Accounts (USERNAME, PASSWORD, EMAIL)
+                                    VALUES (@UserName, @Password, @Email)";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -153,7 +164,8 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to update a Account by their id from database
-            string sqlStatement = "UPDATE dbo.Accounts SET USERNAME = @UserName, PASSWORD = @Password, EMAIL = @Email WHERE ID = @Id";
+            string sqlStatement = @"UPDATE dbo.Accounts
+                                    SET USERNAME = @UserName, PASSWORD = @Password, EMAIL = @Email WHERE ID = @Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))

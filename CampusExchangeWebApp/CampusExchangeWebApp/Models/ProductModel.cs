@@ -31,5 +31,9 @@ namespace CampusExchangeWebApp.Models
         // Account Id
         [DisplayName("Account Id")]
         public int AccountId { get; set; }
+
+        // Account Name
+        [DisplayName("Account Name")]
+        public string AccountUserName { get; set; }
     }
 }
