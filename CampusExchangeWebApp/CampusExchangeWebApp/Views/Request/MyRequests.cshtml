@@ -1,0 +1,66 @@
+@model CampusExchangeWebApp.Models.RequestModel
+
+@{
+    ViewData["Title"] = "My Requests Page";
+}
+
+<h1>My Requests Dashboard</h1>
+
+<h2 class="mt-4">Your Requests</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.SentRequests != null && Model.SentRequests.Any())
+        {
+            foreach (var item in Model.SentRequests)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>
+                        <span class="text-muted">Pending...</span>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="2">You haven't sent any borrow requests.</td></tr>
+        }
+    </tbody>
+</table>
+
+<h2 class="mt-4">Incoming Requests</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Requested By</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.IncomingRequests != null && Model.IncomingRequests.Any())
+        {
+            foreach (var item in Model.IncomingRequests)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.AccountName</td>
+                    <td>
+                        <a asp-action="Accept" asp-route-id="@item.Id" class="btn btn-sm btn-success">Accept</a> |
+                        <a asp-action="Reject" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Reject</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="3">No incoming requests for your products.</td></tr>
+        }
+    </tbody>
+</table>

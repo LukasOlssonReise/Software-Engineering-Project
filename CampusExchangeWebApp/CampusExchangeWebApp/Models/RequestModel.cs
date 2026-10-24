@@ -23,5 +23,8 @@ namespace CampusExchangeWebApp.Models
         // Account Id
         [DisplayName("Account Id")]
         public int AccountId { get; set; }
+
+        public List<RequestModel> SentRequests { get; set; }
+        public List<RequestModel> IncomingRequests { get; set; }
     }
 }

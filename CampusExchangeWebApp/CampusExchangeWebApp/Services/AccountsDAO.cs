@@ -108,7 +108,13 @@ namespace CampusExchangeWebApp.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    foundAccount = new AccountModel { Id = (int)reader[0], UserName = (string)reader[1], Password = (string)reader[2], Email = (string)reader[3] };
+                    foundAccount = new AccountModel
+                    {
+                        Id = (int)reader[0],
+                        UserName = (string)reader[1],
+                        Password = (string)reader[2],
+                        Email = (string)reader[3]
+                    };
                 }
             }
             return foundAccount;

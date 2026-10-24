@@ -1,11 +1,13 @@
 ﻿using CampusExchangeWebApp.Models;
 using CampusExchangeWebApp.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CampusExchangeWebApp.Controllers
 {
     public class ProductController : Controller
     {
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             ProductsDAO products = new ProductsDAO();
@@ -28,23 +30,23 @@ namespace CampusExchangeWebApp.Controllers
         {
             ProductsDAO products = new ProductsDAO();
             ProductModel foundProduct = products.GetProductById(id);
-            return View("Edit", foundProduct);
+            return View(foundProduct);
         }
         public IActionResult ProcessEdit(ProductModel product)
         {
             ProductsDAO products = new ProductsDAO();
             products.Update(product);
-            return View("Index", products.GetAllProducts());
+            return RedirectToAction("MyItems", "Account");
         }
 
 
-        // Deleate
+        // Delete
         public IActionResult Delete(int id)
         {
             ProductsDAO products = new ProductsDAO();
             ProductModel product = products.GetProductById(id);
             products.Delete(product);
-            return View("Index", products.GetAllProducts());
+            return RedirectToAction("MyItems", "Account");
         }
 
 
@@ -60,7 +62,7 @@ namespace CampusExchangeWebApp.Controllers
             product.AccountId = accountId;
 
             products.Insert(product);
-            return View("Index", products.GetAllProducts());
+            return RedirectToAction("MyItems", "Account");
         }
         public IActionResult Create()
         {

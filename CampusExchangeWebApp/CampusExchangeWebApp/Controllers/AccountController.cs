@@ -105,7 +105,7 @@ namespace CampusExchangeWebApp.Controllers
         {
             AccountsDAO accounts = new AccountsDAO();
             AccountModel foundAccount = accounts.GetAccountById(id);
-            return View("Edit", foundAccount);
+            return View(foundAccount);
         }
         public IActionResult ProcessEdit(AccountModel account)
         {

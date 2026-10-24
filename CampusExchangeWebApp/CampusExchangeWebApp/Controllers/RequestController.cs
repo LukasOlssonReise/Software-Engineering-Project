@@ -1,16 +1,37 @@
 ﻿using CampusExchangeWebApp.Models;
 using CampusExchangeWebApp.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CampusExchangeWebApp.Controllers
 {
     public class RequestController : Controller
     {
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             RequestsDAO requests = new RequestsDAO();
 
             return View(requests.GetAllRequests());
+        }
+
+        // My Requests
+        public IActionResult MyRequests()
+        {
+            RequestsDAO requests = new RequestsDAO();
+            AccountsDAO accounts = new AccountsDAO();
+
+            string username = User.Identity.Name;
+
+            int accountId = accounts.GetAccountByUserName(username);
+
+            var viewModel = new RequestModel
+            {
+                SentRequests = requests.GetRequestsByAccountId(accountId),
+                IncomingRequests = requests.GetIncomingRequestForAccount(accountId),
+            };
+
+            return View(viewModel);
         }
 
 
@@ -28,7 +49,7 @@ namespace CampusExchangeWebApp.Controllers
 
             requests.Insert(request);
 
-            return View("Index", requests.GetAllRequests());
+            return RedirectToAction("Index", "Browse");
         }
 
         public IActionResult Borrow(int id)
@@ -43,6 +64,16 @@ namespace CampusExchangeWebApp.Controllers
             };
 
             return View("Borrow", request);
+        }
+
+
+        // Reject
+        public IActionResult Reject(int id)
+        {
+            RequestsDAO requests = new RequestsDAO();
+            RequestModel request = requests.GetRequestById(id);
+            requests.Delete(request);
+            return RedirectToAction("MyRequests", "Request");
         }
     }
 }

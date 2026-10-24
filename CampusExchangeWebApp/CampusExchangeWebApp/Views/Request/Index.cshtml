@@ -1,10 +1,10 @@
 @model IEnumerable<CampusExchangeWebApp.Models.RequestModel>
 
 @{
-    ViewData["Title"] = "My Request Page";
+    ViewData["Title"] = "Request Page";
 }
 
-<h1>List of your requests</h1>
+<h1>List of all requests</h1>
 
 <table class="table">
     <thead>
@@ -13,7 +13,13 @@
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.AccountName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountId)
             </th>
             <th></th>
         </tr>
@@ -25,11 +31,18 @@
                 @Html.DisplayFor(model => item.ProductName)
             </td>
             <td>
+                @Html.DisplayFor(model => item.ProductId)
+            </td>
+            <td>
                 @Html.DisplayFor(model => item.AccountName)
             </td>
             <td>
-                <a asp-action="Accept" asp-route-id="@item.Id">Accept</a> |
-                <a asp-action="Reject" asp-route-id="@item.Id">Reject</a>
+                @Html.DisplayFor(model => item.AccountId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
