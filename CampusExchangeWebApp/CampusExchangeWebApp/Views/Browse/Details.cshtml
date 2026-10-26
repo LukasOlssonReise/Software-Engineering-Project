@@ -41,7 +41,17 @@
     </dl>
 
         <div class="form-group mb-3">
-            <a href="/Request/Borrow/@Model.Id" class="btn btn-info">Request to borrow</a> 
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="/Request/Borrow/@Model.Id" class="btn btn-info">Request to borrow</a>
+        }
+        else
+        {
+            <p>
+                <a asp-controller="Account" asp-action="Login">Log in</a> to borrow this item.
+            </p>
+        }
+            
             <a asp-controller="Browse" asp-action="Index" class="btn btn-secondary">Back to Browse</a>
         </div>
 </div>

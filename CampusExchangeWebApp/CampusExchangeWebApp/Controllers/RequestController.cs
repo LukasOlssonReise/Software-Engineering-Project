@@ -16,6 +16,7 @@ namespace CampusExchangeWebApp.Controllers
         }
 
         // My Requests
+        [Authorize]
         public IActionResult MyRequests()
         {
             RequestsDAO requests = new RequestsDAO();
@@ -36,6 +37,7 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Borrow
+        [Authorize]
         public IActionResult ProcessBorrow(RequestModel request)
         {
             RequestsDAO requests = new RequestsDAO();
@@ -52,6 +54,7 @@ namespace CampusExchangeWebApp.Controllers
             return RedirectToAction("Index", "Browse");
         }
 
+        [Authorize]
         public IActionResult Borrow(int id)
         {
             ProductsDAO products = new ProductsDAO();
@@ -68,6 +71,7 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Reject
+        [Authorize]
         public IActionResult Reject(int id)
         {
             RequestsDAO requests = new RequestsDAO();
@@ -77,6 +81,7 @@ namespace CampusExchangeWebApp.Controllers
         }
 
         // Accept
+        [Authorize]
         public IActionResult ProcessAccept(LoanModel loan, int requestId)
         {
             RequestsDAO requests = new RequestsDAO();
@@ -100,6 +105,7 @@ namespace CampusExchangeWebApp.Controllers
             return RedirectToAction("MyLoans");
         }
 
+        [Authorize]
         public IActionResult Accept(int id)
         {
             RequestsDAO requests = new RequestsDAO();
@@ -120,6 +126,7 @@ namespace CampusExchangeWebApp.Controllers
         }
 
         // My Loans
+        [Authorize]
         public IActionResult MyLoans()
         {
             AccountsDAO accounts = new AccountsDAO();
@@ -139,6 +146,7 @@ namespace CampusExchangeWebApp.Controllers
         }
 
         // Return
+        [Authorize]
         public IActionResult Return(int id)
         {
             AccountsDAO accounts = new AccountsDAO();

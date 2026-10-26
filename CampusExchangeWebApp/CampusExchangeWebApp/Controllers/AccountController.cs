@@ -21,6 +21,7 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Login
+        [AllowAnonymous]
         public async Task<IActionResult> LoginProcess(AccountModel user)
         {
             // Logger
@@ -54,12 +55,15 @@ namespace CampusExchangeWebApp.Controllers
                 return View("Login", user);
             }
         }
+
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
-
+        // Logout
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("CookieAuth");
@@ -74,6 +78,7 @@ namespace CampusExchangeWebApp.Controllers
         }
 
 
+        [Authorize]
         public IActionResult MyItems()
         {
             ProductsDAO products = new ProductsDAO();
@@ -107,6 +112,7 @@ namespace CampusExchangeWebApp.Controllers
             AccountModel foundAccount = accounts.GetAccountById(id);
             return View(foundAccount);
         }
+        [Authorize(Roles = "Admin")]
         public IActionResult ProcessEdit(AccountModel account)
         {
             if (!ModelState.IsValid)
@@ -132,6 +138,7 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Create
+        [AllowAnonymous]
         public IActionResult ProcessCreate(AccountModel account)
         {
             if (!ModelState.IsValid)
@@ -143,6 +150,7 @@ namespace CampusExchangeWebApp.Controllers
             accounts.Insert(account);
             return RedirectToAction("Login", "Account");
         }
+        [AllowAnonymous]
         public IActionResult Create()
         {
             return View();

@@ -17,7 +17,18 @@
                 <span class="badge bg-primary">@item.Category</span>
                 <h5 class="card-title">@item.Name</h5>
                 <p class="card-text">@item.Description</p>
-                <a href="/Request/Borrow/@item.Id" class="btn btn-primary">Request to borrow</a>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="/Request/Borrow/@item.Id" class="btn btn-primary">Request to borrow</a>
+                }
+                else
+                {
+                    <p>
+                        <a asp-controller="Account" asp-action="Login">Log in</a> to borrow this item.
+                    </p>
+                }
+                
                 <a href="/Browse/Details/@item.Id" class="btn btn-info">Show Details</a>
             </div>
         </div>

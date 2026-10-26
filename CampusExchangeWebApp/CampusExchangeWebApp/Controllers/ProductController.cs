@@ -18,6 +18,7 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Details
+        [Authorize]
         public IActionResult Details(int id)
         {
             ProductsDAO products = new ProductsDAO();
@@ -27,12 +28,14 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Edit
+        [Authorize]
         public IActionResult Edit(int id)
         {
             ProductsDAO products = new ProductsDAO();
             ProductModel foundProduct = products.GetProductById(id);
             return View(foundProduct);
         }
+        [Authorize]
         public IActionResult ProcessEdit(ProductModel product)
         {
             if (!ModelState.IsValid)
@@ -47,6 +50,7 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Delete
+        [Authorize]
         public IActionResult Delete(int id)
         {
             ProductsDAO products = new ProductsDAO();
@@ -57,6 +61,7 @@ namespace CampusExchangeWebApp.Controllers
 
 
         // Create
+        [Authorize]
         public IActionResult ProcessCreate(ProductModel product)
         {
 
@@ -71,6 +76,7 @@ namespace CampusExchangeWebApp.Controllers
             products.Insert(product);
             return RedirectToAction("MyItems", "Account");
         }
+        [Authorize]
         public IActionResult Create()
         {
             return View();
