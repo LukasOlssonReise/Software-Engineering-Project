@@ -109,6 +109,11 @@ namespace CampusExchangeWebApp.Controllers
         }
         public IActionResult ProcessEdit(AccountModel account)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", account);
+            }
+
             AccountsDAO accounts = new AccountsDAO();
             accounts.Update(account);
             return View("Index", accounts.GetAllAccounts());
@@ -129,9 +134,14 @@ namespace CampusExchangeWebApp.Controllers
         // Create
         public IActionResult ProcessCreate(AccountModel account)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Create", account);
+            }
+
             AccountsDAO accounts = new AccountsDAO();
             accounts.Insert(account);
-            return View("Index", accounts.GetAllAccounts());
+            return RedirectToAction("Login", "Account");
         }
         public IActionResult Create()
         {

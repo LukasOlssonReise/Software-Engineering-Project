@@ -1,4 +1,5 @@
-﻿using CampusExchangeWebApp.Models;
+﻿using System.Security.Principal;
+using CampusExchangeWebApp.Models;
 using CampusExchangeWebApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,11 @@ namespace CampusExchangeWebApp.Controllers
         }
         public IActionResult ProcessEdit(ProductModel product)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", product);
+            }
+
             ProductsDAO products = new ProductsDAO();
             products.Update(product);
             return RedirectToAction("MyItems", "Account");
@@ -53,6 +59,7 @@ namespace CampusExchangeWebApp.Controllers
         // Create
         public IActionResult ProcessCreate(ProductModel product)
         {
+
             ProductsDAO products = new ProductsDAO();
             AccountsDAO accounts = new AccountsDAO();
 

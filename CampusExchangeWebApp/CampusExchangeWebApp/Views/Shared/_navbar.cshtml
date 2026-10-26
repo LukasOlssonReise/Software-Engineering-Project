@@ -27,7 +27,12 @@
                         <span class="nav-link text-dark">Hello, @User.Identity.Name!</span>
                     </li>
 
-                    // Requests
+                    // My Loans
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Request" asp-action="MyLoans">My Loans</a>
+                    </li>
+
+                    // My Requests
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Request" asp-action="MyRequests">My Requests</a>
                     </li>

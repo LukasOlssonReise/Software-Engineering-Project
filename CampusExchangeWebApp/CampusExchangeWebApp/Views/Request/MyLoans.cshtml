@@ -1,0 +1,79 @@
+@model CampusExchangeWebApp.Models.LoanModel
+
+@{
+    ViewData["Title"] = "My Loans Dashboard";
+}
+
+<h1>My Loans Dashboard</h1>
+
+<h2 class="mt-4">Items your Borrowing</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Lender</th>
+            <th>Loan Date</th>
+            <th>Expected Return Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.BorrowedLoans != null && Model.BorrowedLoans.Any())
+        {
+            foreach (var item in Model.BorrowedLoans)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.LenderAccountName</td>
+                    <td>@item.LoanDate.ToShortDateString()</td>
+                    <td>
+                        <strong class="text-danger">
+                            @(item.ExpectedReturnDate.HasValue? item.ExpectedReturnDate.Value.ToShortDateString() : "Not Specified")
+                        </strong>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="4">You are not currently borrowing any items.</td></tr>
+        }
+    </tbody>
+</table>
+
+<h2 class="mt-4">Items your Lending out</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Borrower</th>
+            <th>Loan Date</th>
+            <th>Expected Return Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.LendLoans != null && Model.LendLoans.Any())
+        {
+            foreach (var item in Model.LendLoans)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.BorrowerAccountName</td>
+                    <td>@item.LoanDate.ToShortDateString()</td>
+                    <td>
+                        <strong class="text-danger">
+                            @(item.ExpectedReturnDate.HasValue? item.ExpectedReturnDate.Value.ToShortDateString() : "Not Specified")
+                        </strong>
+                    </td>
+                    <td>
+                        <a asp-action="Return" asp-route-id="@item.Id" class="btn btn-sm btn-success">Mark as Returned</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="5">You are not currently lending out any items.</td></tr>
+        }
+    </tbody>
+</table>

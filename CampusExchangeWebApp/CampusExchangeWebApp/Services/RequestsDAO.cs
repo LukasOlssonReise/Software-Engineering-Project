@@ -30,7 +30,7 @@ namespace CampusExchangeWebApp.Services
                 command.Parameters.AddWithValue("@Id", request.Id);
 
                 connection.Open();
-                newIdNumber = Convert.ToInt32(command.ExecuteScalar());
+                newIdNumber = command.ExecuteNonQuery();
             }
             return newIdNumber;
         }
@@ -133,16 +133,17 @@ namespace CampusExchangeWebApp.Services
         {
             List<RequestModel> foundRequests = new List<RequestModel>();
 
+            // SQL code to requesst from a account
             string sqlStatement = @"SELECT r.ID, r.PRODUCT_NAME, r.PRODUCT_ID, r.ACCOUNT_NAME, r.ACCOUNT_ID
                                     FROM dbo.Requests r
                                     INNER JOIN dbo.Products p ON r.PRODUCT_ID = p.Id
-                                    WHERE p.ACCOUNT_ID = @Account_id";
+                                    WHERE p.ACCOUNT_ID = @AccountId";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(sqlStatement, connection);
-                command.Parameters.AddWithValue("@Account_Id", account_id);
+                command.Parameters.AddWithValue("@AccountId", account_id);
 
                 connection.Open();
 
@@ -180,7 +181,7 @@ namespace CampusExchangeWebApp.Services
                 command.Parameters.AddWithValue("@AccountId", request.AccountId);
 
                 connection.Open();
-                newIdNumber = Convert.ToInt32(command.ExecuteScalar());
+                newIdNumber = command.ExecuteNonQuery();
             }
             return newIdNumber;
         }

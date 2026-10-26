@@ -75,5 +75,86 @@ namespace CampusExchangeWebApp.Controllers
             requests.Delete(request);
             return RedirectToAction("MyRequests", "Request");
         }
+
+        // Accept
+        public IActionResult ProcessAccept(LoanModel loan, int requestId)
+        {
+            RequestsDAO requests = new RequestsDAO();
+            AccountsDAO accounts = new AccountsDAO();
+            LoansDAO loans = new LoansDAO();
+
+            string currentUsername = User.Identity.Name;
+            int lenderAccountId = accounts.GetAccountByUserName(currentUsername);
+
+            loan.LenderAccountId = lenderAccountId;
+            loan.LenderAccountName = currentUsername;
+
+            loans.Insert(loan);
+
+            RequestModel request = requests.GetRequestById(requestId);
+            if (request != null)
+            {
+                requests.Delete(request);
+            }
+
+            return RedirectToAction("MyLoans");
+        }
+
+        public IActionResult Accept(int id)
+        {
+            RequestsDAO requests = new RequestsDAO();
+            RequestModel request = requests.GetRequestById(id);
+
+            LoanModel loan = new LoanModel
+            {
+                ProductId = request.ProductId,
+                ProductName = request.ProductName,
+                BorrowerAccountId = request.AccountId,
+                BorrowerAccountName = request.AccountName,
+                ExpectedReturnDate = DateTime.Now.AddDays(7)
+            };
+
+            ViewBag.Requestid = request.Id;
+
+            return View("Accept", loan);
+        }
+
+        // My Loans
+        public IActionResult MyLoans()
+        {
+            AccountsDAO accounts = new AccountsDAO();
+            LoansDAO loans = new LoansDAO();
+
+            string username = User.Identity.Name;
+
+            int accountId = accounts.GetAccountByUserName(username);
+
+            var viewModel = new LoanModel
+            {
+                BorrowedLoans = loans.GetLoansByBorrowerAccountId(accountId),
+                LendLoans = loans.GetLoansByLenderAccountId(accountId),
+            };
+
+            return View(viewModel);
+        }
+
+        // Return
+        public IActionResult Return(int id)
+        {
+            AccountsDAO accounts = new AccountsDAO();
+            LoansDAO loans = new LoansDAO();
+
+            string currentUsername = User.Identity.Name;
+            int currentAccountId = accounts.GetAccountByUserName(currentUsername);
+
+            LoanModel loan = loans.GetLoanById(id);
+
+            if (loan != null & loan.LenderAccountId == currentAccountId)
+            {
+                loans.Delete(loan);
+            }
+
+            return RedirectToAction("MyLoans");
+        }
     }
 }
