@@ -23,21 +23,22 @@
 ### Software Requirements
 
 **Functional Requirements**
-- *User Authentication with email*
+- *User Authentication with Name and Password*
 - *Search and Filter*
 - *Notifications*
 
 **Non-Functional Requirements**
-- *Supports up to 5000 users*
-- *Data persistently*
+- *Supports thousands of users*
+- *Data is persistent*
 
 ### User Manual
 
 **Installing**
 - Visual Studio 2022
-	- ASP.NET and web development
-- Download my files
-- Put them in a project file
+	- ASP.NET and Core Web App (Model-View-Controller)
+- Download my repo files
+- Replace VS 2022 files with mine
+- Don't know about database, but I added mine with name: CampusExchangeDatabase.dacpac
 
 **Running**
 - Run IIS Express in Visual studio
