@@ -58,7 +58,7 @@ namespace CampusExchangeWebApp.Services
                         Name = (string)reader[1],
                         Description = (string)reader[2],
                         Category = (string)reader[3],
-                        AccountId = (int)reader[5]
+                        OwnerId = (int)reader[5]
                     });
                 }
             }
@@ -70,9 +70,9 @@ namespace CampusExchangeWebApp.Services
             ProductModel foundProduct = null;
 
             // SQL code to get a product by their id from database
-            string sqlStatement = @"SELECT p.ID, p.NAME, p.DESCRIPTION, p.CATEGORY, p.PHOTO, p.ACCOUNT_ID, a.USERNAME
+            string sqlStatement = @"SELECT p.ID, p.NAME, p.DESCRIPTION, p.CATEGORY, p.PHOTO, p.OWNER_ID, a.USERNAME
                                     FROM dbo.Products p
-                                    INNER JOIN dbo.Accounts a ON p.ACCOUNT_ID = a.ID
+                                    INNER JOIN dbo.Accounts a ON p.OWNER_ID = a.ID
                                     WHERE p.ID = @Id";
 
             // Talk to the database
@@ -92,8 +92,8 @@ namespace CampusExchangeWebApp.Services
                         Name = (string)reader[1],
                         Description = (string)reader[2],
                         Category = (string)reader[3],
-                        AccountId = (int)reader[5],
-                        AccountUserName = (string)reader[6]
+                        OwnerId = (int)reader[5],
+                        OwnerName = (string)reader[6]
                     };
                 }
             }
@@ -106,7 +106,7 @@ namespace CampusExchangeWebApp.Services
 
             // SQL code to get all products from database
             string sqlStatement = @"SELECT * FROM dbo.Products
-                                    WHERE ACCOUNT_ID = @Account_Id";
+                                    WHERE OWNER_ID = @Account_Id";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -126,7 +126,7 @@ namespace CampusExchangeWebApp.Services
                         Description = (string)reader[2],
                         Category = (string)reader[3],
                         Photo = reader[4] != DBNull.Value ? System.Text.Encoding.UTF8.GetString((byte[])reader[4]) : null,
-                        AccountId = (int)reader[5]
+                        OwnerId = (int)reader[5]
                     });
                 }
             }
@@ -138,7 +138,7 @@ namespace CampusExchangeWebApp.Services
             int newIdNumber = -1;
 
             // SQL code to add a product in database
-            string sqlStatement = @"INSERT INTO dbo.Products (NAME, DESCRIPTION, CATEGORY, ACCOUNT_ID)
+            string sqlStatement = @"INSERT INTO dbo.Products (NAME, DESCRIPTION, CATEGORY, OWNER_ID)
                                     VALUES (@Name, @Description, @Category, @AccountId)";
 
             // Talk to the database
@@ -148,7 +148,7 @@ namespace CampusExchangeWebApp.Services
                 command.Parameters.AddWithValue("@Name", product.Name);
                 command.Parameters.AddWithValue("@Description", product.Description);
                 command.Parameters.AddWithValue("@Category", product.Category);
-                command.Parameters.AddWithValue("@AccountId", product.AccountId);
+                command.Parameters.AddWithValue("@AccountId", product.OwnerId);
 
                 connection.Open();
                 newIdNumber = Convert.ToInt32(command.ExecuteScalar());
@@ -192,7 +192,7 @@ namespace CampusExchangeWebApp.Services
                         Name = (string)reader[1],
                         Description = (string)reader[2],
                         Category = (string)reader[3],
-                        AccountId = (int)reader[5]
+                        OwnerId = (int)reader[5]
                     });
                 }
             }

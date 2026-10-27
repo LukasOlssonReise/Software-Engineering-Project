@@ -71,7 +71,7 @@ namespace CampusExchangeWebApp.Controllers
             string currentUsername = User.Identity.Name;
             int accountId = accounts.GetAccountByUserName(currentUsername);
 
-            product.AccountId = accountId;
+            product.OwnerId = accountId;
 
             products.Insert(product);
             return RedirectToAction("MyItems", "Account");

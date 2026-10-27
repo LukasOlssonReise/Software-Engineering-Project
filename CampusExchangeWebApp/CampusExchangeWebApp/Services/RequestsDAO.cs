@@ -137,7 +137,7 @@ namespace CampusExchangeWebApp.Services
             string sqlStatement = @"SELECT r.ID, r.PRODUCT_NAME, r.PRODUCT_ID, r.ACCOUNT_NAME, r.ACCOUNT_ID
                                     FROM dbo.Requests r
                                     INNER JOIN dbo.Products p ON r.PRODUCT_ID = p.Id
-                                    WHERE p.ACCOUNT_ID = @AccountId";
+                                    WHERE p.OWNER_ID = @AccountId";
 
             // Talk to the database
             using (SqlConnection connection = new SqlConnection(connectionString))

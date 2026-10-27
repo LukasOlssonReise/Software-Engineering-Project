@@ -11,6 +11,9 @@
         <form asp-action="ProcessEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Photo" />
+            <input type="hidden" asp-for="OwnerId" />
+            <input type="hidden" asp-for="OwnerName" />
 
             <div class="form-group mb-3">
                 <label asp-for="Name" class="control-label"></label>
@@ -25,9 +28,9 @@
             </div>
 
             <div class="form-group mb-3">
-                <label class="control-label">Category</label>
-                <select class="form-select" name="category">
-                    <option value="@Model.Category" selected>Current: @Model.Category</option>
+                <label asp-for="Category" class="control-label">Category</label>
+                <select asp-for="Category" class="form-select">
+                    <option value="" selected disabled>-- Select a Category --</option>
                     <option value="Electronics">Electronics</option>
                     <option value="Kitchen">Kitchen</option>
                     <option value="Fitness">Fitness</option>
@@ -46,11 +49,7 @@
                     <option value="Home Appliances">Home Appliances</option>
                     <option value="Other">Other</option>
                 </select>
-            </div>
-
-            <div class="form-group mb-3">
-                <label for="formFile" class="form-label">Photo</label>
-                <input class="form-control" type="file" id="formFile">
+                <span asp-validation-for="Category" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
