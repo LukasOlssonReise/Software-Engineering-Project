@@ -1,0 +1,14 @@
+To reset the identity on a table for database:
+DBCC CHECKIDENT ('', RESEED, 0);
+
+Example of Users with Name and Password for Login:
+hcoffin0	jM8$FbSxCs$}
+ceskrigge1	zN8nC*W&I
+doaks2	        oB19L?Q5sf5PlfE
+bplesing3	gQ2kuetpY9U.QRY.
+zrutgers4	kA3*`v'x|)hhaP
+adalgarno5	uR4J5PU65A.
+jchallener6	wK74}+SG_IM|4wy{
+dcussons7	gM3S>kZ$9@}
+lpelzer8	gZ6IQ"AbTbF,
+jschoenrock9	aK3UY}"+E
